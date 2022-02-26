@@ -2,6 +2,10 @@
 
 The Tile Set Editor is a bespoke application written to make it easier and quicker to import a graphics tile set from a graphics program and convert it to a hex-stream file that can be uploaded to an FPGA GPU and used with maximum flexibility.
 
+Without this tool, the user is forced to convert their image file using Magick Converter to a format that is suitable to be written to the GPU's RAM, and they had little control over the actual colours used and their position in the palette table.
+
+With Tile Set Editor, it's possible to take an image, optimise palette usage and output the palette separately as a .BIN file to be uploaded to the appropriate section of GPU memory alongside the actual image data.
+
 ## Installation
 
 No installation is required - it's a Windows project.  None of that compiling for your build of Linux malarky, installing dependencies and whatnot.  The project is written in Visual Studio 2022, the executable is in the /bin/Debug/ folder - or you can open the project in Visual Studio, check the contents and build it from there.
