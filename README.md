@@ -24,4 +24,4 @@ You can contact me in the main GPU project (for which this tool was created) ove
 ## License
 [GPL-3.0](https://choosealicense.com/licenses/gpl-3.0/)
 
-![GitHub](https://img.shields.io/github/license/nockieboy/TileSet_Editor?style=plastic)
+![GitHub](https://img.shields.io/github/license/nockieboy/TileSet_Editor?style=plastic) https://img.shields.io/github/repo-size/nockieboy/TileSet_Editor https://img.shields.io/github/issues/nockieboy/TileSet_Editor https://img.shields.io/github/v/release/nockieboy/TileSet_Editor https://img.shields.io/github/commits-since/nockieboy/TileSet_Editor/latest/main?sort=semver
