@@ -16,6 +16,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 You can contact me in the main GPU project (for which this tool was created) over at the eevBlog forum: [FPGA-VGA-Controller-for-8-bit-computer](https://www.eevblog.com/forum/fpga/fpga-vga-controller-for-8-bit-computer/new/#new)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
-
 ![GitHub](https://img.shields.io/github/license/nockieboy/TileSet_Editor?style=plastic)
