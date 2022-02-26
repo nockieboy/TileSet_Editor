@@ -1,0 +1,24 @@
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\bin\Debug\net6.0-windows\Tile Set Editor.exe
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\bin\Debug\net6.0-windows\Tile Set Editor.deps.json
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\bin\Debug\net6.0-windows\Tile Set Editor.runtimeconfig.json
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\bin\Debug\net6.0-windows\Tile Set Editor.dll
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\bin\Debug\net6.0-windows\Tile Set Editor.pdb
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.csproj.AssemblyReference.cache
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile_Set_Editor.Form1.resources
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.csproj.GenerateResource.cache
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.AssemblyInfoInputs.cache
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.AssemblyInfo.cs
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.csproj.CoreCompileInputs.cache
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.dll
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\refint\Tile Set Editor.dll
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.pdb
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile Set Editor.genruntimeconfig.cache
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\ref\Tile Set Editor.dll
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile_Set_Editor.Preferences.resources
+D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.exe
+D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.deps.json
+D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.runtimeconfig.json
+D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.dll
+D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.pdb
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile_Set_Editor.About.resources
