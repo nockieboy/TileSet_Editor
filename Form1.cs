@@ -315,6 +315,7 @@ namespace Tile_Set_Editor
                         }
                     }
                 }
+                bitmap1.Dispose();  // free up memory
                 // Analyse palette
                 ColorPalette pal = image1.Palette;
                 for (int i = 0; i < pal.Entries.Length; i++)
@@ -334,6 +335,7 @@ namespace Tile_Set_Editor
                 this.Text = loadImageDialogue.SafeFileName + " | TSE";
                 dataLoaded = true;
                 paletteLoaded = true;
+                image1.Dispose();   // free up memory
                 SetupGridView();
                 PopulateGridView();
                 UpdateStuff();
