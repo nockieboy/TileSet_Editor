@@ -410,25 +410,27 @@ namespace Tile_Set_Editor
                 
                 if (i + 16 < current_tileset_binary.Data.Length)
                 {
-                    string[] row = new string[16];
-                    for (int x=0; x < 16; x++)
+                    int rowId = dataGridView1.Rows.Add();
+                    DataGridViewRow row = dataGridView1.Rows[rowId];
+                    for (int x = 0; x < 16; x++)
                     {
-                        row[x] = current_tileset_binary.Data[i + x].ToString(outStr);
+                        row.Cells[x].Value = current_tileset_binary.Data[i + x].ToString(outStr);
+                        row.Cells[x].Tag = (i + x).ToString();
                     }
-                    dataGridView1.Rows.Add(row);
                     dataGridView1.Rows[rowCount].HeaderCell.Value = rowCount.ToString();
                     rowCount += 1;
                 }
                 else
                 {
-                    string[] row = new string[16];
+                    int rowId = dataGridView1.Rows.Add();
+                    DataGridViewRow row = dataGridView1.Rows[rowId];
                     int a = 0;
                     for (int x = i; x < current_tileset_binary.Data.Length; x++)
                     {
-                        row[a] = current_tileset_binary.Data[x].ToString(outStr);
+                        row.Cells[a].Value = current_tileset_binary.Data[x].ToString(outStr);
+                        row.Cells[a].Tag = (x).ToString();
                         a += 1;
                     }
-                    dataGridView1.Rows.Add(row);
                     dataGridView1.Rows[rowCount].HeaderCell.Value = rowCount.ToString();
                     rowCount += 1;
                 }
@@ -536,7 +538,7 @@ namespace Tile_Set_Editor
             dataGridView1.RowHeadersVisible = true;
             //dataGridView1.RowHeadersWidth = 24;
             
-            for(int i = 0; i < dataGridView1.ColumnCount; i++)
+            for (int i = 0; i < dataGridView1.ColumnCount; i++)
             {
                 dataGridView1.Columns[i].Width = 28;
             }
@@ -675,6 +677,29 @@ namespace Tile_Set_Editor
                     SetPaletteBorder(Int32.Parse(value.ToString(), System.Globalization.NumberStyles.HexNumber));
                 }
                 SelectPaletteListEntry(value.ToString());
+            }
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var tag = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Tag;
+            if (tag == null) { return; }
+            int index = Int32.Parse(tag.ToString());
+            int value = Int32.Parse((string)dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            current_tileset_binary.Data[index] = (byte)value;
+            if (gridColour > 0)
+            {
+                DataGridViewCellStyle style = new DataGridViewCellStyle();
+                style.BackColor = Color.FromArgb(PaletteRGBA[value * 4], PaletteRGBA[value * 4 + 1], PaletteRGBA[value * 4 + 2]);
+                if (gridColour == 2)
+                {
+                    style.ForeColor = style.BackColor;
+                }
+                else
+                {
+                    style.ForeColor = Color.FromArgb(style.BackColor.ToArgb() ^ 0xFFFFFF); // invert foreground text colour
+                }
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = style;
             }
         }
 
