@@ -61,6 +61,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.chkDraw = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -347,11 +348,26 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Palette";
             // 
+            // chkDraw
+            // 
+            this.chkDraw.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chkDraw.AutoSize = true;
+            this.chkDraw.BackgroundImage = global::Tile_Set_Editor.Properties.Resources.brush_200x200;
+            this.chkDraw.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.chkDraw.Location = new System.Drawing.Point(1038, 379);
+            this.chkDraw.MaximumSize = new System.Drawing.Size(48, 48);
+            this.chkDraw.MinimumSize = new System.Drawing.Size(48, 48);
+            this.chkDraw.Name = "chkDraw";
+            this.chkDraw.Size = new System.Drawing.Size(48, 48);
+            this.chkDraw.TabIndex = 10;
+            this.chkDraw.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1307, 452);
+            this.Controls.Add(this.chkDraw);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listView1);
@@ -408,5 +424,6 @@
         private ToolStripMenuItem numbersToolStripMenuItem;
         private ToolStripMenuItem coloursToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator3;
+        private CheckBox chkDraw;
     }
 }

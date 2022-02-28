@@ -32,6 +32,20 @@ namespace Tile_Set_Editor
         [CategoryAttribute("Image"), DescriptionAttribute("The pixel format of the image.")]
         public PixelFormat PixelFormat { get; set; }
 
+        public tileset_binary()
+        {
+            FileName = "";
+            Path = "";
+            Data = new byte[] {0};
+            Size = 0;
+            Colours = 0;
+            LowColIndex = 0;
+            HiColIndex = 0;
+            Width = 0;
+            Height = 0;
+            PixelFormat = PixelFormat.DontCare;
+        }
+
         public tileset_binary(string filename, byte[] data)
         {
             FileName = filename;

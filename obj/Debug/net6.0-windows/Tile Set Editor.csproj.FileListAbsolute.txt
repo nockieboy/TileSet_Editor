@@ -22,3 +22,4 @@ D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.runtimeconfi
 D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.dll
 D:\FPGA\Projects\GPU\tools\TSE\Debug\net6.0-windows\Tile Set Editor.pdb
 C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile_Set_Editor.About.resources
+C:\Users\nocki\OneDrive\Documents\Microcom\Code\TSE\Tile Set Editor\obj\Debug\net6.0-windows\Tile_Set_Editor.Properties.Resources.resources

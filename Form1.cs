@@ -6,7 +6,7 @@ namespace Tile_Set_Editor
 {
     public partial class Form1 : Form
     {
-        private tileset_binary current_tileset_binary;
+        private tileset_binary current_tileset_binary = new tileset_binary();
         private bool hexDisplay = true;
         private bool dataLoaded = false;
         private bool _paletteLoaded = false;
@@ -66,6 +66,7 @@ namespace Tile_Set_Editor
             }
         }
         private string palSep = ",";
+        private int activeColourIndex = 0;
 
         public Form1()
         {
@@ -194,54 +195,56 @@ namespace Tile_Set_Editor
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
-                        // a line looks something like this:
-                        // 000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,
-                        string[] values = line.Split(',');
-                        // values will be a 16-element array (assuming image is 16 pixels wide!), each element being a pixel represented by an RGBA value.
-                        // or it could be a single line with 4,096 elements, depending on how the CSV is saved.
-                        for (int v = 0; v < values.Length; v++)
+                        if (line != null)
                         {
-                            if (values[v] == "") { continue; }
-                            // extract RGBA components from value
-                            byte iR = (byte)Int32.Parse(values[v].ToString().Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-                            byte iG = (byte)Int32.Parse(values[v].ToString().Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
-                            byte iB = (byte)Int32.Parse(values[v].ToString().Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
-                            byte iA = (byte)Int32.Parse(values[v].ToString().Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
-                            // find a matching colour value in PaletteRGBA[]
-                            bool found = false;
-                            bool newEntry = false;
-                            int colIndex = 0;
-                            for (int i = 0; i < PaletteRGBA.Length - 3; i += 4)  // step through PaletteRGBA[] in steps of 4
+                            // a line looks something like this:
+                            // 000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,000000FF,
+                            string[] values = line.Split(',');
+                            // values will be a 16-element array (assuming image is 16 pixels wide!), each element being a pixel represented by an RGBA value.
+                            // or it could be a single line with 4,096 elements, depending on how the CSV is saved.
+                            for (int v = 0; v < values.Length; v++)
                             {
-                                if (PaletteRGBA[i + 3] == 0) // if Alpha value is zero, we will assume this is an empty index entry
+                                if (values[v] == "") { continue; }
+                                // extract RGBA components from value
+                                byte iR = (byte)Int32.Parse(values[v].ToString().Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                                byte iG = (byte)Int32.Parse(values[v].ToString().Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+                                byte iB = (byte)Int32.Parse(values[v].ToString().Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                                byte iA = (byte)Int32.Parse(values[v].ToString().Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+                                // find a matching colour value in PaletteRGBA[]
+                                bool found = false;
+                                bool newEntry = false;
+                                int colIndex = 0;
+                                for (int i = 0; i < PaletteRGBA.Length - 3; i += 4)  // step through PaletteRGBA[] in steps of 4
                                 {
-                                    newEntry = true;
-                                    colIndex = i;
-                                    break;
+                                    if (PaletteRGBA[i + 3] == 0) // if Alpha value is zero, we will assume this is an empty index entry
+                                    {
+                                        newEntry = true;
+                                        colIndex = i;
+                                        break;
+                                    }
+                                    else if (PaletteRGBA[i] == iR && PaletteRGBA[i + 1] == iG && PaletteRGBA[i + 2] == iB && PaletteRGBA[i + 3] == iA)
+                                    {
+                                        found = true;
+                                        colIndex = i;
+                                        break;
+                                    }
                                 }
-                                else if (PaletteRGBA[i] == iR && PaletteRGBA[i + 1] == iG && PaletteRGBA[i + 2] == iB && PaletteRGBA[i + 3] == iA)
+                                if (newEntry) // if none found, create one
                                 {
-                                    found = true;
-                                    colIndex = i;
-                                    break;
+                                    PaletteRGBA[colIndex + 0] = iR;
+                                    PaletteRGBA[colIndex + 1] = iG;
+                                    PaletteRGBA[colIndex + 2] = iB;
+                                    PaletteRGBA[colIndex + 3] = iA;
+                                    colValue = (byte)(colIndex / 4);
+                                    csvInput.Add(colValue);
                                 }
-                            }
-                            if (newEntry) // if none found, create one
-                            {
-                                PaletteRGBA[colIndex + 0] = iR;
-                                PaletteRGBA[colIndex + 1] = iG;
-                                PaletteRGBA[colIndex + 2] = iB;
-                                PaletteRGBA[colIndex + 3] = iA;
-                                colValue = (byte)(colIndex / 4);
-                                csvInput.Add(colValue);
-                            }
-                            else if (found) // entry found, update colValue
-                            {
-                                colValue = (byte)(colIndex / 4);
-                                csvInput.Add(colValue);
+                                else if (found) // entry found, update colValue
+                                {
+                                    colValue = (byte)(colIndex / 4);
+                                    csvInput.Add(colValue);
+                                }
                             }
                         }
-
                     }
                 }
                 // assign the index to current_tileset_binary, then move on to the next colour value.
@@ -363,26 +366,29 @@ namespace Tile_Set_Editor
             {
                 try
                 {
-                    string line;
+                    string? line;
                     int paletteIndex = 0;
                     StreamReader reader = new StreamReader(importPaletteDialogue.OpenFile());
-                    while ((line = reader.ReadLine()) != null)
+                    if (reader is not null)
                     {
-                        if (line.Length == 8) // valid comment line
+                        while ((line = reader.ReadLine()) != null)
                         {
-                            PaletteRGBA[paletteIndex+0] = (byte)int.Parse(line.Substring(2, 2), System.Globalization.NumberStyles.HexNumber); // R
-                            PaletteRGBA[paletteIndex+1] = (byte)int.Parse(line.Substring(4, 2), System.Globalization.NumberStyles.HexNumber); // G
-                            PaletteRGBA[paletteIndex+2] = (byte)int.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber); // B
-                            PaletteRGBA[paletteIndex+3] = (byte)int.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber); // A
-                            if (paletteIndex < 1020)
+                            if (line.Length == 8) // valid comment line
                             {
-                                paletteIndex += 4; // increment paletteIndex in steps of 4
+                                PaletteRGBA[paletteIndex + 0] = (byte)int.Parse(line.Substring(2, 2), System.Globalization.NumberStyles.HexNumber); // R
+                                PaletteRGBA[paletteIndex + 1] = (byte)int.Parse(line.Substring(4, 2), System.Globalization.NumberStyles.HexNumber); // G
+                                PaletteRGBA[paletteIndex + 2] = (byte)int.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber); // B
+                                PaletteRGBA[paletteIndex + 3] = (byte)int.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber); // A
+                                if (paletteIndex < 1020)
+                                {
+                                    paletteIndex += 4; // increment paletteIndex in steps of 4
+                                }
                             }
                         }
+                        paletteLoaded = true;
+                        PopulatePaletteDetails();
+                        label2.Text = "Palette | " + importPaletteDialogue.SafeFileName;
                     }
-                    paletteLoaded = true;
-                    PopulatePaletteDetails();
-                    label2.Text = "Palette | " + importPaletteDialogue.SafeFileName;
                 }
                 catch (SecurityException ex)
                 {
@@ -491,6 +497,7 @@ namespace Tile_Set_Editor
             // Remove any existing PictureBoxes (in case of a palette reload)
             foreach(var pb in this.Controls.OfType<PictureBox>())
             {
+                pb.Click -= PaletteSelectClick;
                 this.Controls.Remove(pb);
             }
             // Create a new palette from PictureBoxes
@@ -506,12 +513,26 @@ namespace Tile_Set_Editor
                         Size = new Size(16, 16),
                         Location = new Point(1042 + x * 16, 97 + y * 16),
                         Image = null,
-                        BackColor = Color.FromArgb(PaletteRGBA[pbIndex], PaletteRGBA[pbIndex+1], PaletteRGBA[pbIndex+2])
+                        BackColor = Color.FromArgb(PaletteRGBA[pbIndex], PaletteRGBA[pbIndex+1], PaletteRGBA[pbIndex+2]),
+                        Tag = colIndex.ToString()
                     };
+                    pictureBox.Click += PaletteSelectClick;
                     this.Controls.Add(pictureBox);
                     colIndex++;
                     pbIndex += 4;
                 }
+            }
+        }
+
+        private void PaletteSelectClick(object? sender, EventArgs e)
+        {
+            PictureBox? pb = sender as PictureBox;
+            if (pb != null)
+            {
+                int index = Int32.Parse(pb.Tag.ToString());
+                SelectPaletteListEntry(index.ToString(outStr));
+                SetPaletteBorder(index);
+                activeColourIndex = index;
             }
         }
 
@@ -666,17 +687,43 @@ namespace Tile_Set_Editor
         {
             if (paletteLoaded)
             {
-                object value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (value == null) { return; }
-                if (outStr == "")
+                if (!chkDraw.Checked)
                 {
-                    SetPaletteBorder(Int32.Parse(value.ToString()));
+                    object value = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    if (value == null) { return; }
+                    if (outStr == "")
+                    {
+                        SetPaletteBorder(Int32.Parse(value.ToString()));
+                    }
+                    else
+                    {
+                        SetPaletteBorder(Int32.Parse(value.ToString(), System.Globalization.NumberStyles.HexNumber));
+                    }
+                    SelectPaletteListEntry(value.ToString());
                 }
                 else
                 {
-                    SetPaletteBorder(Int32.Parse(value.ToString(), System.Globalization.NumberStyles.HexNumber));
+                    int value = activeColourIndex;
+                    var tag = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Tag;
+                    if (tag == null) { return; }
+                    int index = Int32.Parse(tag.ToString());
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = value;
+                    current_tileset_binary.Data[index] = (byte)value;
+                    if (gridColour > 0)
+                    {
+                        DataGridViewCellStyle style = new DataGridViewCellStyle();
+                        style.BackColor = Color.FromArgb(PaletteRGBA[value * 4], PaletteRGBA[value * 4 + 1], PaletteRGBA[value * 4 + 2]);
+                        if (gridColour == 2)
+                        {
+                            style.ForeColor = style.BackColor;
+                        }
+                        else
+                        {
+                            style.ForeColor = Color.FromArgb(style.BackColor.ToArgb() ^ 0xFFFFFF); // invert foreground text colour
+                        }
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style = style;
+                    }
                 }
-                SelectPaletteListEntry(value.ToString());
             }
         }
 
