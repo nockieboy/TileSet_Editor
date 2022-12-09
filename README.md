@@ -1,6 +1,6 @@
 # Tile Set Editor
 
-The Tile Set Editor is a bespoke application written to make it easier and quicker to import a graphics tile set from a graphics program and convert it to a hex-stream file that can be uploaded to an FPGA GPU and used with maximum flexibility.
+The Tile Set Editor is a bespoke application written to make it easier and quicker to import a graphics tile set from a graphics program and convert it to a hex-stream file that can be uploaded to a DIY computer (it was designed for an 8-bit system) or FPGA GPU and used with maximum flexibility.
 
 Without this tool, the user is forced to convert their image file using Magick Converter to a format that is suitable to be written to the GPU's RAM, and they had little control over the actual colours used and their position in the palette table.
 
